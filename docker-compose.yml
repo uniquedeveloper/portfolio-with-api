@@ -1,0 +1,61 @@
+version: '3.8'
+
+services:
+  portfolio-cache-server:
+    restart: always
+    container_name: portfolio-cache-server
+    env_file: ".env"
+    ports:
+      - "3000:3000"
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: cache
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000"]
+      interval: 30s
+      timeout: 5s
+      retries: 2
+      start_period: 30s
+    networks:
+      - portfolio-network
+    volumes:
+      - portfolio-cache-data:/app/cache  # Mount volume for cache persistence
+      - portfolio-tools:/app/tools       # Mount volume for tools persistence
+      - node_modules:/app/node_modules   # Mount volume for node_modules
+
+  portfolio-api:
+    restart: always
+    container_name: portfolio-api
+    env_file: ".env"
+    ports:
+      - "8080:8080"
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: api
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/v1/health"]
+      interval: 30s
+      timeout: 5s
+      retries: 2
+      start_period: 30s
+    networks:
+      - portfolio-network
+    depends_on:
+      portfolio-cache-server:
+        condition: service_healthy
+    volumes:
+      - portfolio-cache-data:/app/cache  # Mount volume to share cache
+      - portfolio-tools:/app/tools       # Mount volume to share tools
+      - node_modules:/app/node_modules   # Mount volume for node_modules
+
+networks:
+  portfolio-network:
+    name: portfolio-network
+    driver: bridge
+
+volumes:
+  portfolio-cache-data:  # Defines the volume for cache storage
+  portfolio-tools:      # Defines the volume for tools storage
+  node_modules:         # Defines the volume for node_modules

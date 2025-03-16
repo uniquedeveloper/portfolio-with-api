@@ -1,0 +1,19 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "$id": "Job",
+  "title": "",
+  "type": "object",
+  "properties": {
+    "pluginId": {
+      "type": "string",
+      "description": "Plugin in which the Job will be placed",
+      "x-prompt": "In which plugin should the job be placed??"
+    },
+    "jobName": {
+      "type": "string",
+      "description": "Name of the job",
+      "x-prompt": "What name would you like to use?"
+    }
+  },
+  "required": ["jobName", "pluginId"]
+}

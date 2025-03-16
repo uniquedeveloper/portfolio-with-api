@@ -1,0 +1,13 @@
+node_modules/
+**/node_modules/
+dist/
+tmp/
+.git/
+.github/
+.vscode/
+.idea/
+how-to/
+CONTRIBUTING.md
+LICENSE
+README.md
+

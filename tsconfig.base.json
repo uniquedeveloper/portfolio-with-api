@@ -1,0 +1,30 @@
+{
+  "ts-node": {
+    "require": ["tsconfig-paths/register"]
+  },
+  "compileOnSave": false,
+  "compilerOptions": {
+    "rootDir": ".",
+    "sourceMap": true,
+    "declaration": false,
+    "moduleResolution": "node",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "importHelpers": true,
+    "target": "es2015",
+    "module": "esnext",
+    "lib": ["ES2021", "dom"],
+    "skipLibCheck": true,
+    "skipDefaultLibCheck": true,
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
+    "baseUrl": ".",
+    "paths": {
+      "@sonarwatch/tx-parser": ["packages/tx-parser/src/index.ts"],
+      "@sonarwatch/portfolio-core": ["packages/core/src/index.ts"],
+      "@sonarwatch/portfolio-plugins": ["packages/plugins/src/index.ts"],
+      "api": ["packages/api/src/main.ts"]
+    }
+  },
+  "exclude": ["node_modules", "tmp"]
+}

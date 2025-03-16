@@ -1,0 +1,19 @@
+{
+  "generators": {
+    "plugin": {
+      "factory": "./src/generators/plugin/generator",
+      "schema": "./src/generators/plugin/schema.json",
+      "description": "plugin generator"
+    },
+    "job": {
+      "factory": "./src/generators/job/generator",
+      "schema": "./src/generators/job/schema.json",
+      "description": "job generator"
+    },
+    "fetcher": {
+      "factory": "./src/generators/fetcher/generator",
+      "schema": "./src/generators/fetcher/schema.json",
+      "description": "fetcher generator"
+    }
+  }
+}

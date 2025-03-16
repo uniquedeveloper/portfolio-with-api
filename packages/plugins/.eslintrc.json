@@ -1,0 +1,25 @@
+{
+  "extends": ["../../.eslintrc.json"],
+  "ignorePatterns": ["!**/*"],
+  "overrides": [
+    {
+      "files": ["*.ts", "*.js"],
+      "rules": {}
+    },
+    {
+      "files": ["*.ts"],
+      "rules": {}
+    },
+    {
+      "files": ["*.js"],
+      "rules": {}
+    },
+    {
+      "files": ["./package.json", "./generators.json"],
+      "parser": "jsonc-eslint-parser",
+      "rules": {
+        "@nx/nx-plugin-checks": "error"
+      }
+    }
+  ]
+}

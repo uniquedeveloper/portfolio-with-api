@@ -1,0 +1,81 @@
+{
+    "name": "api",
+    "$schema": "../../node_modules/nx/schemas/project-schema.json",
+    "sourceRoot": "packages/api/src",
+    "projectType": "application",
+    "targets": {
+      "build": {
+        "executor": "@nx/esbuild:esbuild",
+        "outputs": ["{options.outputPath}"],
+        "defaultConfiguration": "production",
+        "options": {
+          "platform": "node",
+          "outputPath": "dist/packages/api",
+          "format": ["cjs"],
+          "bundle": false,
+          "main": "packages/api/src/main.ts",
+          "tsConfig": "packages/api/tsconfig.app.json",
+          "assets": ["packages/api/src/assets"],
+          "generatePackageJson": true,
+          "esbuildOptions": {
+            "sourcemap": true,
+            "outExtension": {
+              ".js": ".js"
+            }
+          }
+        },
+        "configurations": {
+          "development": {},
+          "production": {
+            "esbuildOptions": {
+              "sourcemap": false,
+              "outExtension": {
+                ".js": ".js"
+              }
+            }
+          }
+        }
+      },
+      "serve-api": {
+        "command": "ts-node -P packages/api/tsconfig.json packages/api/src/main.ts",
+        "dependsOn": []
+      },
+      "serve": {
+        "executor": "@nx/js:node",
+        "defaultConfiguration": "development",
+        "options": {
+          "buildTarget": "api:build"
+        },
+        "configurations": {
+          "development": {
+            "buildTarget": "api:build:development"
+          },
+          "production": {
+            "buildTarget": "api:build:production"
+          }
+        }
+      },
+      "lint": {
+        "executor": "@nx/linter:eslint",
+        "outputs": ["{options.outputFile}"],
+        "options": {
+          "lintFilePatterns": ["packages/api/**/*.ts"]
+        }
+      },
+      "test": {
+        "executor": "@nx/jest:jest",
+        "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+        "options": {
+          "jestConfig": "packages/api/jest.config.ts",
+          "passWithNoTests": true
+        },
+        "configurations": {
+          "ci": {
+            "ci": true,
+            "codeCoverage": true
+          }
+        }
+      }
+    },
+    "tags": []
+}

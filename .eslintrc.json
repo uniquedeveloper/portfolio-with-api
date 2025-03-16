@@ -1,0 +1,92 @@
+{
+  "root": true,
+  "ignorePatterns": ["**/*"],
+  "parser": "@typescript-eslint/parser",
+  "plugins": ["@nx", "@typescript-eslint"],
+  "overrides": [
+    {
+      "files": ["*.ts"],
+      "extends": [
+        "plugin:@nx/typescript",
+        "airbnb-base",
+        "airbnb-typescript/base",
+        "prettier"
+      ],
+      "parserOptions": {
+        "project": ["tsconfig.base.json"]
+      },
+      "rules": {
+        "@typescript-eslint/no-implicit-any-catch": "off",
+        "@typescript-eslint/lines-between-class-members": "off"
+      }
+    },
+    {
+      "files": ["*.js"],
+      "extends": ["plugin:@nx/javascript", "airbnb-base", "prettier"],
+      "rules": {}
+    },
+    {
+      "files": ["*.ts", "*.js"],
+      "rules": {
+        "@nx/enforce-module-boundaries": [
+          "error",
+          {
+            "enforceBuildableLibDependency": true,
+            "allow": [],
+            "depConstraints": [
+              {
+                "sourceTag": "*",
+                "onlyDependOnLibsWithTags": ["*"]
+              }
+            ]
+          }
+        ],
+        "import/no-extraneous-dependencies": [
+          "error",
+          {
+            "packageDir": ["."]
+          }
+        ],
+        "no-await-in-loop": "off",
+        "no-restricted-syntax": "off",
+        "no-use-before-define": "off",
+        "@typescript-eslint/no-use-before-define": "off",
+        "dot-notation": "off",
+        "@typescript-eslint/dot-notation": "off",
+        "import/prefer-default-export": "off",
+        "no-continue": "off",
+        "no-plusplus": ["error", { "allowForLoopAfterthoughts": true }],
+        "no-underscore-dangle": ["error", { "allow": ["__kind"] }]
+      }
+    },
+    {
+      "files": ["*.spec.ts", "*.spec.js"],
+      "env": {
+        "jest": true
+      },
+      "rules": {}
+    },
+    {
+      "files": ["scripts/**/*.ts"],
+      "rules": {
+        "no-console": "off"
+      }
+    },
+    {
+      "files": "*.json",
+      "parser": "jsonc-eslint-parser",
+      "rules": {
+        "@nx/dependency-checks": [
+          "error",
+          {
+            "ignoredFiles": [
+              "packages/plugins/scripts/*.ts",
+              "packages/plugins/src/generators/**/*.ts"
+            ],
+            "ignoredDependencies": ["web3-v1", "ethers", "ioredis", "dotenv"]
+          }
+        ]
+      }
+    }
+  ]
+}
